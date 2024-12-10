@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'sudo -u jenkins which npm'
+                sh 'sudo apt install npm'
             }
         }
         stage('Test') {

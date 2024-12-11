@@ -5,13 +5,19 @@ pipeline {
     }
     stages {
         stage('Build') {
-            steps {
-                sh '/opt/homebrew/bin/npm npm install'
+            agent {
+                docker {
+                    image 'gradle:8.2.0-jdk17-alpine'
+                    // Run the container on the node specified at the
+                    // top-level of the Pipeline, in the same workspace,
+                    // rather than on a new node entirely:
+                    reuseNode true
+                }
             }
-        }
-        stage('Test') {
-            steps {
-                sh './jenkins/scripts/test.sh'
+            stage('Test') {
+                steps {
+                    sh 'gradle --version'
+                }
             }
         }
     }
